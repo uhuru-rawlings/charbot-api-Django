@@ -28,3 +28,25 @@ def registration_view(request):
         }
         response = RegistrationSerializer(data, many = True)
         return Response(response.data)
+
+
+@api_view(['POST'])
+def addcontact_view(request):
+    details = request.data
+    user = details['user']
+    username = details['username']
+    phonenumber = details['phonenumber']
+
+    checkcontact = Contacts(user=user, phonenumber=phonenumber)
+    if checkcontact.exists():
+        return Response("This contact already added")
+    else:
+        new_contact = Contacts(user=user, username=username, phonenumber=phonenumber)
+        new_contact.save()
+        data = {
+            'user':user,
+            'username':username,
+            'phonenumber':phonenumber
+        }
+        serialize = ContactsSerializer(data, many =True)
+        return Response(serialize.data)
