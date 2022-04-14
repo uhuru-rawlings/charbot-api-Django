@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Regisreation(models.Model):
+class Regisration(models.Model):
     username = models.CharField(max_length=100)
     phonenumber = models.CharField(max_length=13)
     userimage = models.ImageField(upload_to = 'images/')
@@ -10,15 +10,20 @@ class Regisreation(models.Model):
     is_loggedin = models.BooleanField(default=True)
 
     class Meta:
-        db_table = 'Regisreation'
+        db_table = 'Regisration'
 
     def __str__(self):
         return self.username
 
 class Contacts(models.Model):
-    user = models.ForeignKey(to, on_delete=models.CASCADE)
+    user = models.ForeignKey(Regisration, on_delete=models.CASCADE)
     username = models.CharField(max_length=100)
     phonenumber = models.CharField(max_length=13)
 
     class Meta:
         db_table = 'Contacts'
+
+    def __str__(self):
+        return self.username
+
+    
