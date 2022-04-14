@@ -10,3 +10,8 @@ class ContactsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contacts
         field = ['user','username','phonenumber']
+
+class ChartsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Charts
+        field = ['user','sentto','message','date_sent']
