@@ -3,7 +3,7 @@ from .models import Regisration,Contacts,Charts
 
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
-        models = Regisration
+        model = Regisration
         fields = ['username','phonenumber','userimage','password','is_active','is_loggedin']
 
 class ContactsSerializer(serializers.ModelSerializer):

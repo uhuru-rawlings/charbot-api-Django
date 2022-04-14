@@ -8,10 +8,10 @@ from rest_framework.response import Response
 @api_view(['POST'])
 def registration_view(request):
     details = request.data
-    username = request.details['username']
-    phonenumber = request.details['phonenumber']
-    userimage = request.details['userimage']
-    password = request.details['password']
+    username = details['username']
+    phonenumber = details['phonenumber']
+    userimage = details['userimage']
+    password = details['password']
     password = make_password(password)
 
     checkuser = Regisration.objects.filter(phonenumber=phonenumber)
