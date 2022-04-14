@@ -31,3 +31,9 @@ class Charts(models.Model):
     sentto = models.CharField(max_length=13)
     message = models.CharField(max_length=5000)
     date_sent = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'Charts'
+
+    def __str__(self):
+        return self.sentto
