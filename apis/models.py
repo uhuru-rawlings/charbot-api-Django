@@ -26,4 +26,8 @@ class Contacts(models.Model):
     def __str__(self):
         return self.username
 
-    
+class Charts(models.Model):
+    user = models.ForeignKey(Regisration, on_delete=models.CASCADE)
+    sentto = models.CharField(max_length=13)
+    message = models.CharField(max_length=5000)
+    date_sent = models.DateTimeField(auto_now=True)
