@@ -7,6 +7,7 @@ from rest_framework.response import Response
 import datetime, jwt
 from rest_framework import status
 import secrets
+from django.db.models import Q
 # Create your views here.
 @api_view(['POST'])
 def registration_view(request):
@@ -124,4 +125,15 @@ def getcontact(request):
     else:
         return Response("Sorry wrong user details provided")
 
-        
+@api_view(['POST'])
+def getcharts(request):
+    userdet = request.data
+    user = userdet['user']
+    sentto = userdet['contact']
+    contactuser = Regisration.objects.get(phonenumber=sentto)
+    if user:
+        charts = Charts.objects.filter(Q(user=user, sentto=sentto) | Q(user=contactuser, sentto=user.phonenumber))
+        serialize = ChartsSerializer(charts, many = True)
+        return Response(serialize.data)
+    else:
+        return Response("Please privide user details")
