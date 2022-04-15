@@ -43,20 +43,37 @@ def login_view(request):
         getuser = Regisration.objects.get(phonenumber=phonenumber)
         if check_password(password, getuser.password):
             response = Response()
-            user = {
+            payload = {
                 'id':getuser.id,
                 'phonenumber':getuser.phonenumber,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
                 'iat':datetime.datetime.utcnow()
             }
-            token = jwt.encode(user,'secrete', algorithm = 'HS256').decode('utf-8')
+            token = jwt.encode(payload,'secret', algorithm = 'HS256').decode('utf-8')
+            response = Response()
             response.set_cookie(key='jwt',value=token, httponly=False)
+            response.data = {'jwt':token}
+            return response
         else:
             return Response("Wrong password, please try again")
     else:
         return Response("sorry this contact is not registered.")
 
-
+@api_view(['POST'])
+def getuser(request):
+    details = request.data
+    token = details['jwt']
+    if token:
+        try:
+            # user = jwt.decode(token,'secret', algorithm = ['HS256'])
+            user = jwt.decode(token, 'secret', algorithm = ['HS256'])
+        except:
+            return Response('unknown user token')
+        userdet = Regisration.objects.filter(id = user['id']).first()
+        serialize = RegistrationSerializer(userdet)
+        return Response(serialize.data)
+    else:
+        return Response('UnAuthenticated user')
 @api_view(['POST'])
 def addcontact_view(request):
     details = request.data
