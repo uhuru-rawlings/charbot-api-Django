@@ -39,7 +39,8 @@ def login_view(request):
     if getuser.exists():
         getuser = Regisration.objects.get(phonenumber=phonenumber)
         if check_password(password, getuser.password):
-            pass
+            response = Response()
+            response.set_cookie(key=phonenumber)
         else:
             return Response("Wrong password, please try again")
     else:
