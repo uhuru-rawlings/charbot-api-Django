@@ -50,7 +50,7 @@ def login_view(request):
                 'iat':datetime.datetime.utcnow()
             }
             token = jwt.encode(user,'secrete', algorithm = 'HS256').decode('utf-8')
-            response.set_cookie(key=phonenumber)
+            response.set_cookie(key='jwt',value=token, httponly=False)
         else:
             return Response("Wrong password, please try again")
     else:
