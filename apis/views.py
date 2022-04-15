@@ -29,7 +29,21 @@ def registration_view(request):
         response = RegistrationSerializer(data, many = True)
         return Response(response.data)
 
+@api_view(['POST'])
+def login_view(request):
+    details = request.data
+    phonenumber = details['phonenumber']
+    password = details['password']
 
+    getuser = Regisration.objects.filter(phonenumber=phonenumber)
+    if getuser.exists():
+        getuser = Regisration.objects.get(phonenumber=phonenumber)
+        if check_password(password, getuser.password):
+            pass
+        else:
+            return Response("Wrong password, please try again")
+    else:
+        return Response("sorry this contact is not registered.")
 @api_view(['POST'])
 def addcontact_view(request):
     details = request.data
