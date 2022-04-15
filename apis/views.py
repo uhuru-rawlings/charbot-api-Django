@@ -108,3 +108,16 @@ def addcontact_view(request):
         }
         serialize = ContactsSerializer(data, many =True)
         return Response(serialize.data)
+
+@api_view(['POST'])
+def getcontact(request):
+    details = request.data
+    userid = details['id']
+    if userid:
+       userdet = Regisration.objects.get(id = userid)
+       if userdet:
+           contacts = Contacts.objects.filter(user=userdet)
+           serialize = ContactsSerializer(contacts, many = True)
+           return Response(serialize.data)
+    else:
+        return Response("Sorry wrong user details provided")
