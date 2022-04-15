@@ -4,14 +4,14 @@ from .models import Regisration,Contacts,Charts
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Regisration
-        fields = ['username','phonenumber','userimage','password','is_active','is_loggedin']
+        fields = ['username','phonenumber','userimage','is_active','is_loggedin']
 
 class ContactsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contacts
-        field = ['user','username','phonenumber']
+        fields = ['user','username','phonenumber']
 
 class ChartsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Charts
-        field = ['user','sentto','message','date_sent']
+        fields = ['user','sentto','message','date_sent']

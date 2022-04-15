@@ -18,7 +18,7 @@ from django.urls import path
 from apis.views import registration_view,login_view,getuser,resetpassword_view,getcontact,getcharts,addcontact_view
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', registration_view, name="registration"),
+    path('api/signup', registration_view, name="registration"),
     path('api/login', login_view, name="userlogin"),
     path('api/getuser', getuser, name="userdetails"),
     path('api/resetpassword', resetpassword_view, name="resetpassword"),
