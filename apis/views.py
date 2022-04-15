@@ -4,6 +4,9 @@ from .serializers import RegistrationSerializer,ContactsSerializer,ChartsSeriali
 from .models import Regisration,Contacts,Charts
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import datetime, jwt
+from rest_framework import status
+import secrets
 # Create your views here.
 @api_view(['POST'])
 def registration_view(request):
@@ -40,11 +43,20 @@ def login_view(request):
         getuser = Regisration.objects.get(phonenumber=phonenumber)
         if check_password(password, getuser.password):
             response = Response()
+            user = {
+                'id':getuser.id,
+                'phonenumber':getuser.phonenumber,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+                'iat':datetime.datetime.utcnow()
+            }
+            token = jwt.encode(user,'secrete', algorithm = 'HS256').decode('utf-8')
             response.set_cookie(key=phonenumber)
         else:
             return Response("Wrong password, please try again")
     else:
         return Response("sorry this contact is not registered.")
+
+
 @api_view(['POST'])
 def addcontact_view(request):
     details = request.data
