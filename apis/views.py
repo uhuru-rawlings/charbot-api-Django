@@ -119,5 +119,9 @@ def getcontact(request):
            contacts = Contacts.objects.filter(user=userdet)
            serialize = ContactsSerializer(contacts, many = True)
            return Response(serialize.data)
+       else:
+           return Response("Sorry wrong user details provided")
     else:
         return Response("Sorry wrong user details provided")
+
+        
