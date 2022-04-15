@@ -93,21 +93,24 @@ def resetpassword_view(request):
 def addcontact_view(request):
     details = request.data
     user = details['user']
+    print("###############")
+    print(user)
+    user = Regisration.objects.get(phonenumber = user['phonenumber'])
     username = details['username']
     phonenumber = details['phonenumber']
 
-    checkcontact = Contacts(user=user, phonenumber=phonenumber)
+    checkcontact = Contacts.objects.filter(user=user, phonenumber=phonenumber)
     if checkcontact.exists():
         return Response("This contact already added")
     else:
         new_contact = Contacts(user=user, username=username, phonenumber=phonenumber)
         new_contact.save()
-        data = {
+        details = {
             'user':user,
             'username':username,
             'phonenumber':phonenumber
         }
-        serialize = ContactsSerializer(data, many =True)
+        serialize = ContactsSerializer(details, many =True)
         return Response(serialize.data)
 
 @api_view(['POST'])
