@@ -74,6 +74,20 @@ def getuser(request):
         return Response(serialize.data)
     else:
         return Response('UnAuthenticated user')
+
+@api_view(['GET'])
+def resetpassword_view(request):
+    details = request.data
+    phonenumber = details['phonenumber']
+    password = details['password']
+    getuser = Regisration.objects.filter(phonenumber=phonenumber)
+    if getuser.exists():
+        getuser = Regisration.objects.get(phonenumber=phonenumber)
+        getuser.password = make_password(password)
+        getuser.save()
+        return Response("Password rest successfully")
+    else:
+        return Response("no user with this phone number")
 @api_view(['POST'])
 def addcontact_view(request):
     details = request.data
