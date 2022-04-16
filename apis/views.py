@@ -105,13 +105,13 @@ def addcontact_view(request):
     else:
         new_contact = Contacts(user=user, username=username, phonenumber=phonenumber)
         new_contact.save()
-        details = {
-            'user':user,
-            'username':username,
-            'phonenumber':phonenumber
-        }
-        serialize = ContactsSerializer(details, many =True)
-        return Response(serialize.data)
+        # details = {
+        #     'user':user,
+        #     'username':username,
+        #     'phonenumber':phonenumber
+        # }
+        # serialize = ContactsSerializer(details, many =True)
+        return Response("contact saved")
 
 @api_view(['POST'])
 def getcontact(request):
