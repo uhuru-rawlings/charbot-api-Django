@@ -142,7 +142,7 @@ def addchat(request):
 @api_view(['POST'])
 def getcharts(request):
     userdet = request.data
-    user = userdet['user']
+    user = Regisration.objects.get(phonenumber=userdet['phonenumber'])
     sentto = userdet['contact']
     contactuser = Regisration.objects.get(phonenumber=sentto)
     if user:
