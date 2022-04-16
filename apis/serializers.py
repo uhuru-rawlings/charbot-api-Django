@@ -4,7 +4,7 @@ from .models import Regisration,Contacts,Charts
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Regisration
-        fields = ['username','phonenumber','userimage','is_active','is_loggedin']
+        fields = ['id','username','phonenumber','userimage','is_active','is_loggedin']
 
 class ContactsSerializer(serializers.ModelSerializer):
     class Meta:
