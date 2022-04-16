@@ -124,9 +124,20 @@ def getcontact(request):
            serialize = ContactsSerializer(contacts, many = True)
            return Response(serialize.data)
        else:
-           return Response("Sorry wrong user details provided")
+           return Response("No contacts")
     else:
         return Response("Sorry wrong user details provided")
+
+@api_view(['POST'])
+def addchat(request):
+    chat = request.data
+    user = Regisration.objects.get(phonenumber=chat['phonenumber'])
+    sentto = chat['sentto']
+    message = chat['message']
+
+    new_chat = Charts(user=user, sentto=sentto,message=message)
+    new_chat.save()
+    return Response("chat sent")
 
 @api_view(['POST'])
 def getcharts(request):
